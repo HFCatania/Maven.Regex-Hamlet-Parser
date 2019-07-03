@@ -1,6 +1,12 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by thook on 10/7/15.
@@ -35,5 +41,24 @@ public class HamletParser {
     public String getHamletData(){
         return hamletData;
     }
+
+    public String replaceNames(){
+    try {
+        Path path = Paths.get(loadFile());
+        Stream<String> lines = Files.lines(path);
+        lines.map(line -> line.replaceAll("Hamlet", "Leon"));
+        lines.map(line -> line.replaceAll("Horatio", "Tariq"));
+        List<String> replaced = lines.collect(Collectors.toList());
+        Files.write(path, replaced);
+
+    return lines.toString();
+    } catch (IOException e){
+        e.printStackTrace();
+        }
+    return null;
+    }
+
+
+
 
 }
